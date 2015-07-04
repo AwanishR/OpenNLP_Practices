@@ -19,16 +19,15 @@ public class StenceDetector {
 			IOException {
 
 		NoteReaderArrayList noteRead = new NoteReaderArrayList();
-		InputStream modelIn = new FileInputStream(
-				"en-sent.bin");
-		InputStream modelInToken = new FileInputStream ("en-token.bin");
+		InputStream modelIn = new FileInputStream("en-sent.bin");
+		InputStream modelInToken = new FileInputStream("en-token.bin");
 		try {
 			FileWriter fw = new FileWriter("output\\finaloutput.txt");
 			BufferedWriter bw = new BufferedWriter(fw);
 			SentenceModel sentMod = new SentenceModel(modelIn);
 			SentenceDetectorME sentDetector = new SentenceDetectorME(sentMod);
-			TokenizerModel token = new TokenizerModel (modelInToken);
-			Tokenizer tokenizer = new TokenizerME (token);
+			TokenizerModel token = new TokenizerModel(modelInToken);
+			Tokenizer tokenizer = new TokenizerME(token);
 			// String sent
 			// []=sentDetector.sentDetect("Called participant to discuss quitting smoking.  He has been smoking for 35+ years and is not interested at this time in quitting.  He isn't even working on attempting to quit.  He does understand that tobacco and nicotine use has a negative impact on his health, but overall he feels fine.  He works closely with his doctor, so he understands the risks.  His doctor has even stopped asking him about quitting smoking at this point.  I did mention that NRT medication have a $0 copay and gave him the contact number for WellDyne just in case.  He did not welcome a follow up coaching session. ");
 			// String sent []= noteRead.getNotes();
@@ -36,8 +35,8 @@ public class StenceDetector {
 			bw.write("Total Number of Notes +++++++++" + notes.size());
 			int TotalCount = 0, count = 0, totTokenCount = 0;
 			Date startTime = new Date();
-			long start =System.currentTimeMillis();
-			System.out.println("Start Time =>"+startTime);
+			long start = System.currentTimeMillis();
+			System.out.println("Start Time =>" + startTime);
 			System.out.println("Program running .....");
 			for (String sentences : notes) {
 				if (sentences != null) {
@@ -51,16 +50,16 @@ public class StenceDetector {
 						count++;
 						bw.write("\n" + sentToWrite);
 						TotalCount++;
-						String tokens []=tokenizer.tokenize(sentToWrite);
-						int tCount =0;
+						String tokens[] = tokenizer.tokenize(sentToWrite);
+						int tCount = 0;
 						bw.write("\n\n +++ Tokens Detected from this sentence +++++++\n");
-						for (String tokensToWrite : tokens )
-						{
-							bw.write("\n"+tokensToWrite);
+						for (String tokensToWrite : tokens) {
+							bw.write("\n" + tokensToWrite);
 							tCount++;
 							totTokenCount++;
 						}
-						bw.write("\nTotal Number of tokens detected++++++>>"+tCount);
+						bw.write("\nTotal Number of tokens detected++++++>>"
+								+ tCount);
 					}
 					bw.write("\nNumber of sentences in this note--->" + count);
 					count = 0;
@@ -74,15 +73,17 @@ public class StenceDetector {
 					+ totTokenCount);
 			System.out.println("Processing Complete!!\nTotal Notes Processed="
 					+ notes.size());
-			System.out.println("Total Sentences detected="+TotalCount);
-			System.out.println("Total Tokens detected="+totTokenCount);
-			float averageSentence = (float)TotalCount/notes.size();
-			float averageToken = (float)totTokenCount/notes.size(); 
-			System.out.printf("Average sentence per note = %f",averageSentence);
-			System.out.printf("\nAverage token per note = %f\n",averageToken);
-			long diffInTime = end-start;
-			System.out.println("End Time => "+endTime);
-			System.out.println("Total Processing Time=>"+(float)diffInTime/1000+" seconds");
+			System.out.println("Total Sentences detected=" + TotalCount);
+			System.out.println("Total Tokens detected=" + totTokenCount);
+			float averageSentence = (float) TotalCount / notes.size();
+			float averageToken = (float) totTokenCount / notes.size();
+			System.out
+					.printf("Average sentence per note = %f", averageSentence);
+			System.out.printf("\nAverage token per note = %f\n", averageToken);
+			long diffInTime = end - start;
+			System.out.println("End Time => " + endTime);
+			System.out.println("Total Processing Time=>" + (float) diffInTime
+					/ 1000 + " seconds");
 			bw.close();
 			fw.close();
 		} catch (IOException ie) {
