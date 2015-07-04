@@ -15,9 +15,9 @@ public class NoteReaderArrayList {
 		ArrayList<String> notes = new ArrayList<String>();
 		try {
 			FileReader fr = new FileReader(
-					"D:\\Awanish\\NLP\\data\\sample1.txt");
+					"input\\sample2.txt");
 			BufferedReader br = new BufferedReader(fr);
-			FileWriter fw = new FileWriter("D:\\Awanish\\NLP\\data\\out.txt");
+			FileWriter fw = new FileWriter("output\\out.txt");
 			BufferedWriter bw = new BufferedWriter(fw);
 			String s;
 			boolean eof = false;

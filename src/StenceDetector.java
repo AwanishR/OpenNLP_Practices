@@ -3,6 +3,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import opennlp.tools.sentdetect.SentenceDetectorME;
@@ -18,10 +19,10 @@ public class StenceDetector {
 
 		NoteReaderArrayList noteRead = new NoteReaderArrayList();
 		InputStream modelIn = new FileInputStream(
-				"D:\\Awanish\\NLP\\Programs\\OpenNLPModels\\en-sent.bin");
-		InputStream modelInToken = new FileInputStream ("D:\\Awanish\\NLP\\Programs\\OpenNLPModels\\en-token.bin");
+				"en-sent.bin");
+		InputStream modelInToken = new FileInputStream ("en-token.bin");
 		try {
-			FileWriter fw = new FileWriter("D:\\Awanish\\NLP\\Data\\out1.txt");
+			FileWriter fw = new FileWriter("output\\finaloutput.txt");
 			BufferedWriter bw = new BufferedWriter(fw);
 			SentenceModel sentMod = new SentenceModel(modelIn);
 			SentenceDetectorME sentDetector = new SentenceDetectorME(sentMod);
@@ -32,7 +33,7 @@ public class StenceDetector {
 			// String sent []= noteRead.getNotes();
 			ArrayList<String> notes = noteRead.getNotes();
 			bw.write("Total Number of Notes +++++++++" + notes.size());
-			int TotalCount = 0, count = 0;
+			int TotalCount = 0, count = 0, totTokenCount = 0;
 			System.out.println("Program running .....");
 			for (String sentences : notes) {
 				if (sentences != null) {
@@ -52,6 +53,7 @@ public class StenceDetector {
 						{
 							bw.write("\n"+tokensToWrite);
 							tCount++;
+							totTokenCount++;
 						}
 						bw.write("\nTotal Number of tokens detected++++++>>"+tCount);
 					}
@@ -61,11 +63,16 @@ public class StenceDetector {
 			}
 			bw.write("\n\nTotal Detected Sentences +++++++++++++++"
 					+ TotalCount);
+			bw.write("\n\nTotal Detected Tokens +++++++++++++++"
+					+ totTokenCount);
 			System.out.println("Processing Complete!!\nTotal Notes Processed="
 					+ notes.size());
 			System.out.println("Total Sentences detected="+TotalCount);
-			float f = (float)TotalCount/notes.size();
-			System.out.printf("Average sentence per note = %f",f);
+			System.out.println("Total Tokens detected="+totTokenCount);
+			float averageSentence = (float)TotalCount/notes.size();
+			float averageToken = (float)totTokenCount/notes.size(); 
+			System.out.printf("Average sentence per note = %f",averageSentence);
+			System.out.printf("\nAverage token per note = %f",averageToken);
 			bw.close();
 			fw.close();
 		} catch (IOException ie) {
