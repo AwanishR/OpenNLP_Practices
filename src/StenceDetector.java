@@ -3,8 +3,9 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Date;
+//import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
@@ -34,6 +35,9 @@ public class StenceDetector {
 			ArrayList<String> notes = noteRead.getNotes();
 			bw.write("Total Number of Notes +++++++++" + notes.size());
 			int TotalCount = 0, count = 0, totTokenCount = 0;
+			Date startTime = new Date();
+			long start =System.currentTimeMillis();
+			System.out.println("Start Time =>"+startTime);
 			System.out.println("Program running .....");
 			for (String sentences : notes) {
 				if (sentences != null) {
@@ -43,6 +47,7 @@ public class StenceDetector {
 					// System.out.println ("\nDetected sentences are:");
 					bw.write("\n\n++++++++Detected sentences are +++++++++++++");
 					for (String sentToWrite : sent) {
+						bw.write("\n++++++++ sentence is +++++++++++++");
 						count++;
 						bw.write("\n" + sentToWrite);
 						TotalCount++;
@@ -61,6 +66,8 @@ public class StenceDetector {
 					count = 0;
 				}
 			}
+			long end = System.currentTimeMillis();
+			Date endTime = new Date();
 			bw.write("\n\nTotal Detected Sentences +++++++++++++++"
 					+ TotalCount);
 			bw.write("\n\nTotal Detected Tokens +++++++++++++++"
@@ -72,7 +79,10 @@ public class StenceDetector {
 			float averageSentence = (float)TotalCount/notes.size();
 			float averageToken = (float)totTokenCount/notes.size(); 
 			System.out.printf("Average sentence per note = %f",averageSentence);
-			System.out.printf("\nAverage token per note = %f",averageToken);
+			System.out.printf("\nAverage token per note = %f\n",averageToken);
+			long diffInTime = end-start;
+			System.out.println("End Time => "+endTime);
+			System.out.println("Total Processing Time=>"+(float)diffInTime/1000+" seconds");
 			bw.close();
 			fw.close();
 		} catch (IOException ie) {
